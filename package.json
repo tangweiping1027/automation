@@ -1,0 +1,33 @@
+{
+  "name": "meituan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "koa": "^2.11.0",
+    "koa-better-body": "^3.3.9",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^8.0.8"
+  },
+  "dependencies": {
+    "koa": "^2.12.0",
+    "koa-router": "^8.0.8",
+    "module-alias": "^2.2.2",
+    "promise-mysql": "^4.1.3"
+  },
+  "_moduleAliases": {
+    "@/apps": "./apps",
+    "@/libs": "./libs",
+    "@/logs": "./logs",
+    "@/models": "./models",
+    "@/mods": "./mods",
+    "@/utils": "./utils",
+    "@/config": "./config"
+  }
+}
