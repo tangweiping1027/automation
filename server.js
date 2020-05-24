@@ -25,7 +25,6 @@ if (cluster.isMaster) {
 
         config.apps[name] = newConfig.apps[name]
       }
-
     }
 
 
