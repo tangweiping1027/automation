@@ -1,21 +1,28 @@
 const Koa = require('koa')
-const { databases } = require('@/config')
 const http = require('http')
-const mysql = require('promise-mysql')
-const __db = require('@/mods/__databases')
-module.exports =async function ({ port, entry }) {
-  let app = new Koa()
+
+module.exports =async function (config) {
+  const app = new Koa()
+  app.config = app.context.config = config
   //创建数据库连接
-  for (const name in databases) {
-    __db[name] = await mysql.createPool(databases[name])
-  }
-  app.use(require(entry))
+  await require('@/libs/serverInc/database')()
+
+  //创建redis连接
+  await require('@/libs/serverInc/redis')()
+
+  //创建session
+  await require('@/libs/serverInc/session')(app)
+
+  // 渲染
+  await require('@/libs/serverInc/render')(app)
+  // 路由入口文件引入
+  app.use(require(config.entry))
   // app.listen(port, () => {
   //   console.log('server is running: ', port)
   // })
   let httpServer = http.createServer(app.callback())
-  httpServer.listen(port, () => {
-    console.log('server is running: ', port)
+  httpServer.listen(config.port, () => {
+    console.log('server is running: ', config.port)
   })
   return httpServer
 }

@@ -1,16 +1,25 @@
 require('module-alias/register')
-const { myRequire } = require('./libs/common')
-const path = require('path')
+// const { myRequire } = require('./libs/common')
+// const path = require('path')
+const minimist = require('minimist')
+process._argv = minimist(process.argv)
+
+const { path } = require('./utils')
 let config = require('./config')
 const cluster = require('cluster')
 const server = require('./libs/server')
 
-
-
+const fs = require('fs')
+function myRequire(path) {
+  const str = fs.readFileSync(path).toString()
+  let module = {}
+  eval(str)
+  return module.exports
+}
 
 if (cluster.isMaster) {
   setInterval(() => {
-    let newConfig = myRequire(path.resolve(__dirname, 'config.js'))
+    let newConfig = myRequire(path('./config.js'))
 
     for (const name in newConfig.apps) {
       let newApp = newConfig.apps[name]

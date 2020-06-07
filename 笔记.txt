@@ -26,3 +26,31 @@ node.js模块 —— 单例模式
     子进程退出：
     1、异常退出 -> 重启
     2、正常退出
+
+session管理
+1、保存用户信息    ——服务器
+2、存在redis里面 ——让任何一台服务器都可以访问到数据
+3、为啥不存在数据库：
+    redis更快
+
+
+redis
+redis.getAsync(key)
+redis.setAsync(key, '23432')
+redis.delAsync(key)
+
+
+
+前端渲染-csr    html标签由前端JS生成   react、vue
+1、性能高
+2、用户体验快
+3、不兼容
+4、不利于SEO
+5、不够安全
+
+后端渲染-ssr    html标签由后台生成 php、java、node-ejs
+1、性能低
+2、用户体验差点
+3、兼容
+4、SEO友好
+5、更安全

@@ -1,19 +1,25 @@
-// const { path } = require('./utils')
-const path = require('path')
+const { path } = require('./utils')
+// const path = require('path')
+const mode = process._argv.env === 'dev' ? 'dev' : 'pord'
 module.exports= {
-
   apps: {
     admin: {
-      version: 1,
+      version: 2,
       enabled: true,
-      port: 8082,
-      entry: '@/apps/admin'
+      port: process._argv.prot || 8082,
+      entry: path('./apps/admin'),
+      templateDir: path('./apps/admin/template'),
+      cacheDir: mode === 'dev' ? __dirname : '/usr/share/nginx/html/',
+      minifyHtml: true
     },
     meishi: {
       version: 1,
       enabled: false,
       port: 8083,
-      entry: '@/apps/meishi'
+      entry: '@/apps/meishi',
+      templateDir: '@/apps/admin/template',
+      cacheDir: mode === 'dev' ? __dirname : '/usr/share/nginx/html/',
+      minifyHtml: true
     }
   },
   databases: {
@@ -23,6 +29,13 @@ module.exports= {
       user: 'root',
       password: '123456',
       database: 'meituan'
+    }
+  },
+  redis: {
+    main: {
+      host: 'localhost',
+      port: 6379,
+      password: undefined
     }
   }
 }
